@@ -25,37 +25,73 @@ unsigned long ndr ( uint8_t height )
     unsigned long cpixel = 0;
 
     if ( height < 16 ) {
-        cpixel = linear_inter( height, (uint32_t)0x101010,
-                                       (uint32_t)0x252525,
+        cpixel = linear_inter( height, (uint32_t)0x2002ff,
+                                       (uint32_t)0x7802ff,
                                        (uint8_t)0, (uint8_t)15);
-    } else if ( ( height > 15 ) && ( height < 32 ) ) {
-        cpixel = linear_inter( height, (uint32_t)0x252525,
-                                       (uint32_t)0x464646,
-                                       (uint8_t)16, (uint8_t)31);
-    } else if ( ( height > 31 ) && ( height < 128 ) ) {
-        cpixel = linear_inter( height, (uint32_t)0x464646,
-                                       (uint32_t)0x525252,
-                                       (uint8_t)32, (uint8_t)127);
-    } else if ( ( height > 127 ) && ( height < 160 ) ) {
-        cpixel = linear_inter( height, (uint32_t)0x525252,
-                                       (uint32_t)0xababab,
-                                       (uint8_t)128, (uint8_t)159);
-    } else if ( ( height > 159 ) && ( height < 192 ) ) {
-        cpixel = linear_inter( height, (uint32_t)0xababab,
-                                       (uint32_t)0xffffff,
-                                       (uint8_t)160, (uint8_t)191);
-    } else if ( ( height > 191 ) && ( height < 224 ) ) {
-        cpixel = linear_inter( height, (uint32_t)0xffffff,
-                                       (uint32_t)0x7c7c7c,
-                                       (uint8_t)192, (uint8_t)223);
-    } else if ( ( height > 223 ) && ( height < 240 ) ) {
-        cpixel = linear_inter( height, (uint32_t)0x7c7c7c,
-                                       (uint32_t)0x999999,
-                                       (uint8_t)224, (uint8_t)239);
-    } else if ( height > 239 ) {
-        cpixel = linear_inter( height, (uint32_t)0x999999,
-                                       (uint32_t)0xa0a0a0,
-                                       (uint8_t)240, (uint8_t)255);
+    } else if ( ( height > 15 ) && ( height < 31 ) ) {
+        cpixel = linear_inter( height, (uint32_t)0x7802ff,
+                                       (uint32_t)0xd102ff,
+                                       (uint8_t)16, (uint8_t)30);
+    } else if ( ( height > 30 ) && ( height < 46 ) ) {
+        cpixel = linear_inter( height, (uint32_t)0xd102ff,
+                                       (uint32_t)0xff01d5,
+                                       (uint8_t)31, (uint8_t)45);
+    } else if ( ( height > 45 ) && ( height < 61 ) ) {
+        cpixel = linear_inter( height, (uint32_t)0xff01d5,
+                                       (uint32_t)0xff0077,
+                                       (uint8_t)46, (uint8_t)60);
+    } else if ( ( height > 60 ) && ( height < 76 ) ) {
+        cpixel = linear_inter( height, (uint32_t)0xff0077,
+                                       (uint32_t)0xff0022,
+                                       (uint8_t)61, (uint8_t)75);
+    } else if ( ( height > 75 ) && ( height < 91 ) ) {
+        cpixel = linear_inter( height, (uint32_t)0xff0022,
+                                       (uint32_t)0xff1500,
+                                       (uint8_t)76, (uint8_t)90);
+    } else if ( ( height > 90 ) && ( height < 106 ) ) {
+        cpixel = linear_inter( height, (uint32_t)0xff1500,
+                                       (uint32_t)0xff4400,
+                                       (uint8_t)91, (uint8_t)105);
+    } else if ( ( height > 105 ) && ( height < 121 ) ) {
+        cpixel = linear_inter( height, (uint32_t)0xff4400,
+                                       (uint32_t)0xff8400,
+                                       (uint8_t)106, (uint8_t)120);
+    } else if ( ( height > 120 ) && ( height < 136 ) ) {
+        cpixel = linear_inter( height, (uint32_t)0xff8400,
+                                       (uint32_t)0xffb700,
+                                       (uint8_t)121, (uint8_t)135);
+    } else if ( ( height > 135 ) && ( height < 151 ) ) {
+        cpixel = linear_inter( height, (uint32_t)0xffb700,
+                                       (uint32_t)0xffe100,
+                                       (uint8_t)136, (uint8_t)150);
+    } else if ( ( height > 150 ) && ( height < 166 ) ) {
+        cpixel = linear_inter( height, (uint32_t)0xffe100,
+                                       (uint32_t)0xdaff07,
+                                       (uint8_t)151, (uint8_t)165);
+    } else if ( ( height > 165 ) && ( height < 181 ) ) {
+        cpixel = linear_inter( height, (uint32_t)0xdaff07,
+                                       (uint32_t)0x80ff00,
+                                       (uint8_t)166, (uint8_t)180);
+    } else if ( ( height > 180 ) && ( height < 196 ) ) {
+        cpixel = linear_inter( height, (uint32_t)0x80ff00,
+                                       (uint32_t)0x2fff00,
+                                       (uint8_t)181, (uint8_t)195);
+    } else if ( ( height > 195 ) && ( height < 211 ) ) {
+        cpixel = linear_inter( height, (uint32_t)0x2fff00,
+                                       (uint32_t)0x01ff41,
+                                       (uint8_t)196, (uint8_t)210);
+    } else if ( ( height > 210 ) && ( height < 226 ) ) {
+        cpixel = linear_inter( height, (uint32_t)0x01ff41,
+                                       (uint32_t)0x03ffd5,
+                                       (uint8_t)211, (uint8_t)225);
+    } else if ( ( height > 225 ) && ( height < 241 ) ) {
+        cpixel = linear_inter( height, (uint32_t)0x03ffd5,
+                                       (uint32_t)0x03a744,
+                                       (uint8_t)226, (uint8_t)240);
+    } else if ( height > 240 ) {
+        cpixel = linear_inter( height, (uint32_t)0x03a744,
+                                       (uint32_t)0x0320ff,
+                                       (uint8_t)241, (uint8_t)255);
     }
 
     return ( cpixel );
