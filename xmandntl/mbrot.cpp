@@ -14,17 +14,38 @@
 
 #include <stdint.h>
 #include <stdlib.h>
+#include <NTL/RR.h>
 
-uint32_t mbrot( double c_r, double c_i, uint32_t bail_out )
+using namespace std;
+using namespace NTL;
+
+typedef uint32_t Foo[16][16][64][64];
+
+struct Bar {
+    Foo* data;
+};
+
+void test(Bar t)
+{
+    printf("%i----------\n", t.data[0][0][0][0]);
+}
+
+uint32_t mbrot( RR c_r, RR c_i, uint32_t bail_out )
 {
 
     /* point c belongs to the Mandelbrot set if and only if
      * the magnitude of the f(c) <= 2.0 */
     uint32_t height = 0;
-    double zr = 0.0;
-    double zi = 0.0;
-    double tmp_r, tmp_i;
-    double mag = 0.0;
+    RR zr(0.0);
+    RR zi(0.0);
+    RR tmp_r, tmp_i;
+    RR mag(0.0);
+
+    struct Bar t;
+    Foo data;
+    data[0][0][0][0] = 10;
+    t.data = &data;
+    test(t);
 
     while ( ( height < bail_out ) && ( mag <= 4.0 ) ) {
         tmp_r = ( zr * zr ) - ( zi * zi );
