@@ -28,3 +28,5 @@ For example if you want 100 bits precision, you call it like this:
 This results in the following picture for the same region:
 
 ![NTL xmand](new.png "NTL xmand")
+
+PS: currently only the Makefile.deb_x86_64 is changed for this project.
