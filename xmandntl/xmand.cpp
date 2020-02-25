@@ -31,6 +31,7 @@
 
 #include <pthread.h>
 
+extern "C" {
 Window create_borderless_topwin(Display *dsp,
                          unsigned int width, unsigned int height,
                          int x, int y,
@@ -43,6 +44,7 @@ int X_error_handler(Display *dsp, XErrorEvent *errevt);
 uint64_t timediff( struct timespec st, struct timespec en );
 
 int sysinfo(void);
+}
 
 unsigned long mandle_col( uint8_t height );
 
@@ -166,7 +168,7 @@ int main(int argc, char*argv[])
     double win_x, win_y;
 
     /* small general purpose char buffer */
-    char *buf = calloc((size_t)128,sizeof(unsigned char));
+    char *buf = (char *) calloc((size_t)128,sizeof(unsigned char));
 
     char *disp_name = NULL;
 
