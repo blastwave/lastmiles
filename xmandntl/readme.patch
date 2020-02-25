@@ -1,0 +1,26 @@
+
+hydra$ gpatch --verbose -i mssx86.patch
+Hmm...  Looks like a unified diff to me...
+The text leading up to this was:
+--------------------------
+|From eaadfe73764de81f73d703da5c91bf4a9a423875 Mon Sep 17 00:00:00 2001
+|From: mssx86 <mss@waifu.club>
+|Date: Sun, 23 Feb 2020 11:57:53 +0300
+|Subject: [PATCH] upd: grayscale colors.
+|
+|---
+| xmand/not_double_r_col.c | 32 ++++++++++++++++----------------
+| 1 file changed, 16 insertions(+), 16 deletions(-)
+|
+|diff --git a/xmand/not_double_r_col.c b/xmand/not_double_r_col.c
+|index 5d07fee..30bf335 100644
+|--- a/xmand/not_double_r_col.c
+|+++ b/xmand/not_double_r_col.c
+--------------------------
+patching file not_double_r_col.c
+Using Plan A...
+Hunk #1 succeeded at 25.
+Hmm...  Ignoring the trailing garbage.
+done
+hydra$ 
+

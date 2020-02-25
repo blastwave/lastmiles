@@ -1,0 +1,40 @@
+
+CC=/usr/bin/cc
+
+CFLAGS= -I$(IDIR) -std=iso9899:1999 -fno-builtin -march=armv7-a \
+	-mtune=cortex-a17 -mfpu=vfpv4-d16 -mstructure-size-boundary=32 \
+	-marm -mtls-dialect=gnu2 -pedantic -Wl,-rpath=/opt/bw/lib \
+	-mno-sched-prolog -mlittle-endian -O0 -g
+
+CPPFLAGS=-D_TS_ERRNO -D_POSIX_PTHREAD_SEMANTICS -D_LARGEFILE64_SOURCE \
+	-D_X_OPEN_SOURCE=600
+
+LIBS = -lX11 -lrt -lm
+
+SRCS = ./mandel_col.c \
+	./linear_inter.c \
+	./mbrot.c \
+	../xwin/x_error_handler.c \
+	../xwin/create_gc.c \
+	../xwin/create_borderless_topwin.c \
+	../time_and_date/timediff.c \
+	../pthread/sysmem.c ../pthread/sysinfo.c
+
+
+OBJS = ./mandel_col.o \
+	./linear_inter.o \
+	./mbrot.o \
+	../xwin/x_error_handler.o \
+	../xwin/create_gc.o \
+	../xwin/create_borderless_topwin.o \
+	../time_and_date/timediff.o \
+	../pthread/sysmem.o ../pthread/sysinfo.o
+
+%.o: %.c
+	$(CC) -c -o $@ $< $(CFLAGS) $(CPPFLAGS)
+
+xmand: xmand.o $(OBJS)
+	$(CC) -o $@ $^ $(CFLAGS) $(CPPFLAGS) $(LIBS)
+
+clean:
+	rm -f $(OBJS) xmand.o xmand

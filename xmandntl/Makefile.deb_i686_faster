@@ -1,0 +1,39 @@
+
+CC=/usr/bin/gcc-9
+
+CFLAGS= -I$(IDIR) -std=iso9899:1999 -m32 -O2 -pedantic \
+	-pedantic-errors -Wall -Wl,-rpath=/opt/bw/lib,--enable-new-dtags \
+	-malign-double -mpc80
+
+CPPFLAGS=-D_TS_ERRNO -D_POSIX_PTHREAD_SEMANTICS -D_LARGEFILE64_SOURCE \
+	-D_X_OPEN_SOURCE=600
+
+LIBS = -lX11 -lrt -lm
+
+SRCS = ./mandel_col.c \
+	./linear_inter.c \
+	./mbrot.c \
+	../xwin/x_error_handler.c \
+	../xwin/create_gc.c \
+	../xwin/create_borderless_topwin.c \
+	../time_and_date/timediff.c \
+	../pthread/sysmem.c ../pthread/sysinfo.c
+
+
+OBJS = ./mandel_col.o \
+	./linear_inter.o \
+	./mbrot.o \
+	../xwin/x_error_handler.o \
+	../xwin/create_gc.o \
+	../xwin/create_borderless_topwin.o \
+	../time_and_date/timediff.o \
+	../pthread/sysmem.o ../pthread/sysinfo.o
+
+%.o: %.c
+	$(CC) -c -o $@ $< $(CFLAGS) $(CPPFLAGS)
+
+xmand: xmand.o $(OBJS)
+	$(CC) -o $@ $^ $(CFLAGS) $(CPPFLAGS) $(LIBS)
+
+clean:
+	rm -f $(OBJS) xmand.o xmand

@@ -1,0 +1,54 @@
+
+CC=/usr/bin/gcc-9
+
+CFLAGS= -I$(IDIR) -std=iso9899:1999 -m32 -g -O0 -pedantic \
+	-pedantic-errors -Wall \
+	-march=i686 -mtune=i686 -Wl,-rpath=/opt/bw/lib,--enable-new-dtags \
+	-fno-builtin -malign-double -mpc80 -mno-mmx -mno-sse -mno-sse2 \
+	-mno-sse3 -mno-ssse3 -mno-sse4 -mno-sse4a -mno-sse4.1 -mno-sse4.2 \
+	-mno-avx -mno-avx2 -mno-avx512f -mno-avx512pf -mno-avx512er \
+	-mno-avx512cd -mno-avx512vl -mno-avx512bw -mno-avx512dq \
+	-mno-avx512ifma -mno-avx512vbmi -mno-sha -mno-aes -mno-pclmul \
+	-mno-clflushopt -mno-clwb -mno-fsgsbase -mno-rdrnd -mno-f16c \
+	-mno-fma -mno-pconfig -mno-wbnoinvd -mno-fma4 -mno-prfchw \
+	-mno-rdpid -mno-prefetchwt1 -mno-rdseed -mno-sgx -mno-xop \
+	-mno-lwp -mno-3dnow -mno-3dnowa -mno-popcnt -mno-abm -mno-adx \
+	-mno-bmi -mno-bmi2 -mno-lzcnt -mno-fxsr -mno-xsave -mno-xsaveopt \
+	-mno-xsavec -mno-xsaves -mno-rtm -mno-hle -mno-tbm -mno-mpx \
+	-mno-mwaitx -mno-clzero -mno-pku -mno-avx512vbmi2 -mno-gfni \
+	-mno-vaes -mno-vpclmulqdq -mno-avx512bitalg -mno-movdiri \
+	-mno-movdir64b -mno-avx512vpopcntdq -mno-avx5124fmaps \
+	-mno-avx512vnni -mno-avx5124vnniw
+
+CPPFLAGS=-D_TS_ERRNO -D_POSIX_PTHREAD_SEMANTICS -D_LARGEFILE64_SOURCE \
+	-D_X_OPEN_SOURCE=600
+
+LIBS = -lX11 -lrt -lm
+
+SRCS = ./mandel_col.c \
+	./linear_inter.c \
+	./mbrot.c \
+	../xwin/x_error_handler.c \
+	../xwin/create_gc.c \
+	../xwin/create_borderless_topwin.c \
+	../time_and_date/timediff.c \
+	../pthread/sysmem.c ../pthread/sysinfo.c
+
+
+OBJS = ./mandel_col.o \
+	./linear_inter.o \
+	./mbrot.o \
+	../xwin/x_error_handler.o \
+	../xwin/create_gc.o \
+	../xwin/create_borderless_topwin.o \
+	../time_and_date/timediff.o \
+	../pthread/sysmem.o ../pthread/sysinfo.o
+
+%.o: %.c
+	$(CC) -c -o $@ $< $(CFLAGS) $(CPPFLAGS)
+
+xmand: xmand.o $(OBJS)
+	$(CC) -o $@ $^ $(CFLAGS) $(CPPFLAGS) $(LIBS)
+
+clean:
+	rm -f $(OBJS) xmand.o xmand

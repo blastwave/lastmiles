@@ -1,0 +1,42 @@
+
+CC=/usr/bin/cc
+
+CFLAGS= -I$(IDIR) -std=iso9899:1999 -m64 -O3 \
+	-pedantic -pedantic-errors \
+	-mieee-fp -mhard-float -mpc80 \
+	-malign-double \
+	-m128bit-long-double -mlong-double-80 \
+	-mstackrealign -mpreferred-stack-boundary=4
+
+CPPFLAGS=-D_TS_ERRNO -D_POSIX_PTHREAD_SEMANTICS -D_LARGEFILE64_SOURCE \
+	-D_X_OPEN_SOURCE=600
+
+LIBS = -lX11 -lrt -lm
+
+SRCS = ./mandel_col.c ./not_double_r_col.c \
+	./linear_inter.c \
+	./mbrot.c \
+	../xwin/x_error_handler.c \
+	../xwin/create_gc.c \
+	../xwin/create_borderless_topwin.c \
+	../time_and_date/timediff.c \
+	../pthread/sysmem.c ../pthread/sysinfo.c
+
+
+OBJS = ./mandel_col.o ./not_double_r_col.o \
+	./linear_inter.o \
+	./mbrot.o \
+	../xwin/x_error_handler.o \
+	../xwin/create_gc.o \
+	../xwin/create_borderless_topwin.o \
+	../time_and_date/timediff.o \
+	../pthread/sysmem.o ../pthread/sysinfo.o
+
+%.o: %.c
+	$(CC) -c -o $@ $< $(CFLAGS) $(CPPFLAGS)
+
+xmand: xmand.o $(OBJS)
+	$(CC) -o $@ $^ $(CFLAGS) $(CPPFLAGS) $(LIBS)
+
+clean:
+	rm -f $(OBJS) xmand.o xmand
