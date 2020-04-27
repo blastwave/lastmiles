@@ -1,29 +1,29 @@
 
-CC=/usr/bin/cc
+CC=/opt/bw/gcc9/bin/gcc
 
 CFLAGS= -I$(IDIR) -std=iso9899:1999 -m64 -O0 -g -fno-builtin \
 	-pedantic -pedantic-errors \
 	-march=k8 -mtune=k8 -mieee-fp -mhard-float -mpc80 \
-	-fno-fast-math -malign-double \
+	-fno-fast-math -malign-double -mno-mmx \
 	-m128bit-long-double -mlong-double-80 \
-	-mstackrealign -mpreferred-stack-boundary=4 -mno-mmx \
+	-mstackrealign -mpreferred-stack-boundary=4
 
 CPPFLAGS=-D_TS_ERRNO -D_POSIX_PTHREAD_SEMANTICS -D_LARGEFILE64_SOURCE \
 	-D_X_OPEN_SOURCE=600
 
-LIBS = -lX11 -lrt -lm -lpthread
+LIBS = -lX11 -lrt -lm
 
-SRCS = ./mandel_col.cpp ./not_double_r_col.cpp \
-	./linear_inter.cpp \
-	./mbrot.cpp \
-	../xwin/x_error_handler.cpp \
-	../xwin/create_gc.cpp \
-	../xwin/create_borderless_topwin.cpp \
-	../time_and_date/timediff.cpp \
-	../pthread/sysmem.cpp ../pthread/sysinfo.cpp
+SRCS = ./mandel_col.c \
+	./linear_inter.c \
+	./mbrot.c \
+	../xwin/x_error_handler.c \
+	../xwin/create_gc.c \
+	../xwin/create_borderless_topwin.c \
+	../time_and_date/timediff.c \
+	../pthread/sysmem.c ../pthread/sysinfo.c
 
 
-OBJS = ./mandel_col.o ./not_double_r_col.o \
+OBJS = ./mandel_col.o \
 	./linear_inter.o \
 	./mbrot.o \
 	../xwin/x_error_handler.o \
@@ -32,7 +32,7 @@ OBJS = ./mandel_col.o ./not_double_r_col.o \
 	../time_and_date/timediff.o \
 	../pthread/sysmem.o ../pthread/sysinfo.o
 
-%.o: %.cpp
+%.o: %.c
 	$(CC) -c -o $@ $< $(CFLAGS) $(CPPFLAGS)
 
 xmand: xmand.o $(OBJS)

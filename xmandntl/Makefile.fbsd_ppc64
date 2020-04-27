@@ -1,0 +1,49 @@
+
+CC=/usr/local/bin/gcc9
+
+CFLAGS= -I$(IDIR) -std=iso9899:1999 -pedantic -g -O0 -fno-builtin -m64 \
+	-mcpu=970 -mcall-freebsd -mno-altivec -mno-isel -mno-vsx \
+	-mno-crypto -mno-htm -mno-quad-memory-atomic -mfull-toc \
+	-mno-multiple -mupdate -mno-avoid-indexed-addresses \
+	-mno-dlmzb -mno-bit-align -mno-strict-align -mbig -mregnames \
+	-mno-recip -fno-unsafe-math-optimizations -pedantic-errors \
+        -Wall
+
+CPPFLAGS=-D_TS_ERRNO -D_POSIX_PTHREAD_SEMANTICS -D_LARGEFILE64_SOURCE \
+	-D_X_OPEN_SOURCE=600
+
+LIBS = -lX11 -lrt -lm
+
+LDIR=/usr/local/lib
+IDIR=/usr/local/include
+
+SRCS = ./mandel_col.c \
+	./not_double_r_col.c \
+	./linear_inter.c \
+	./mbrot.c \
+	../xwin/x_error_handler.c \
+	../xwin/create_gc.c \
+	../xwin/create_borderless_topwin.c \
+	../time_and_date/timediff.c \
+	../pthread/sysmem.c ../pthread/sysinfo.c
+
+
+OBJS = ./mandel_col.o \
+	./not_double_r_col.o \
+	./linear_inter.o \
+	./mbrot.o \
+	../xwin/x_error_handler.o \
+	../xwin/create_gc.o \
+	../xwin/create_borderless_topwin.o \
+	../time_and_date/timediff.o \
+	../pthread/sysmem.o ../pthread/sysinfo.o
+
+%.o: %.c
+	$(CC) -c -o $@ $< $(CFLAGS) $(CPPFLAGS) -I$(IDIR)
+
+xmand: xmand.o $(OBJS)
+	$(CC) -o $@ $^ $(CFLAGS) $(CPPFLAGS) -L$(LDIR) $(LIBS)
+
+clean:
+	rm -f $(OBJS) xmand.o xmand
+
