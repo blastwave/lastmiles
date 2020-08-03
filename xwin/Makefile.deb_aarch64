@@ -1,0 +1,85 @@
+
+CC=/usr/bin/cc
+
+CFLAGS= -I$(IDIR) -std=iso9899:1999 -fno-builtin -g -march=native \
+	-mtune=cortex-a53 \
+	-mtls-dialect=trad -pedantic -mlittle-endian
+
+CPPFLAGS=-D_TS_ERRNO -D_POSIX_PTHREAD_SEMANTICS -D_LARGEFILE64_SOURCE \
+	-D_X_OPEN_SOURCE=600
+
+LIBS = -lX11 -lrt -lm
+
+CMPLEX_DIR=../complex_vector
+IDIR=/usr/local/include
+LDIR=/usr/local/lib
+
+SRCS = grid.c x_error_handler.c create_gc.c \
+	create_borderless_topwin.c \
+	../time_and_date/timediff.c \
+	../complex_vector/intercept.c \
+	../complex_vector/intercept_point.c \
+	../complex_vector/gradient.c \
+	../complex_vector/check_status.c \
+	../complex_vector/cplex_add.c \
+	../complex_vector/cplex_check.c \
+	../complex_vector/cplex_div.c \
+	../complex_vector/cplex_mag.c \
+	../complex_vector/cplex_mult.c \
+	../complex_vector/cplex_quad.c \
+	../complex_vector/cplex_sq.c \
+	../complex_vector/cplex_sqrt.c \
+	../complex_vector/cplex_sub.c \
+	../complex_vector/cplex_theta.c \
+	../complex_vector/cplex_vec_add.c \
+	../complex_vector/cplex_vec_copy.c \
+	../complex_vector/cplex_vec_dot.c \
+	../complex_vector/cplex_vec_set.c \
+	../complex_vector/cplex_vec_print.c \
+	../complex_vector/cplex_vec_scale.c \
+	../complex_vector/cplex_vec_mag.c \
+	../complex_vector/cplex_vec_normalize.c \
+	../complex_vector/cplex_vec_cross.c \
+	../complex_vector/cplex_cramer.c \
+	../complex_vector/cplex_det.c \
+	../pthread/sysmem.c ../pthread/sysinfo.c
+
+
+OBJS = x_error_handler.o create_gc.o \
+	create_borderless_topwin.o \
+	../time_and_date/timediff.o \
+	../complex_vector/intercept.o \
+	../complex_vector/intercept_point.o \
+	../complex_vector/gradient.o \
+	../complex_vector/check_status.o \
+	../complex_vector/cplex_add.o \
+	../complex_vector/cplex_check.o \
+	../complex_vector/cplex_div.o \
+	../complex_vector/cplex_mag.o \
+	../complex_vector/cplex_mult.o \
+	../complex_vector/cplex_quad.o \
+	../complex_vector/cplex_sq.o \
+	../complex_vector/cplex_sqrt.o \
+	../complex_vector/cplex_sub.o \
+	../complex_vector/cplex_theta.o \
+	../complex_vector/cplex_vec_add.o \
+	../complex_vector/cplex_vec_copy.o \
+	../complex_vector/cplex_vec_dot.o \
+	../complex_vector/cplex_vec_set.o \
+	../complex_vector/cplex_vec_print.o \
+	../complex_vector/cplex_vec_scale.o \
+	../complex_vector/cplex_vec_mag.o \
+	../complex_vector/cplex_vec_normalize.o \
+	../complex_vector/cplex_vec_cross.o \
+	../complex_vector/cplex_cramer.o \
+	../complex_vector/cplex_det.o \
+	../pthread/sysmem.o ../pthread/sysinfo.o
+
+%.o: %.c
+	$(CC) -c -o $@ $< $(CFLAGS) $(CPPFLAGS) -I$(CMPLEX_DIR) -I$(IDIR)
+
+grid: grid.o $(OBJS)
+	$(CC) -o $@ $^ $(CFLAGS) $(CPPFLAGS) -L$(LDIR) $(LIBS)
+
+clean:
+	rm -f $(OBJS) grid.o grid
